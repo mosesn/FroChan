@@ -1,0 +1,113 @@
+<img src="../template/admin/image/icon/configuration_large.png" width="32" height="32" align="left" style="margin-right:20px;" />
+<h3>{$txt_module_installation}</h3>
+
+
+{if $display_form}
+<fieldset class="c5t_setting_form">
+  <legend>{$module_title}</legend>
+  
+        <div>{$module_description}</div>
+    
+        <div class="c5t_error_message" style="margin-top:20px;">
+          {foreach from=$module_message item=item}
+            <div class="c5t_error_message_item">{$item.message}</div>
+          {/foreach}              
+        </div>  
+  
+        <form {$form_attributes}>
+        
+        <table class="c5t_setting">
+        {foreach from=$administration_form item=item}
+        <tr>
+          <td class="c5t_setting_form_label">{$item.label}</td>
+          <td>
+            {if $item.description}
+                {$item.description}
+            
+                <br />
+                <br />
+            {/if}
+            
+            {if $item.type == 'group'}            
+                {foreach from=$item.elements item=subitem}
+                    {$subitem.html} {$item.separator}
+                {/foreach}
+            {else}            
+                <div style="white-space:nowrap;">
+                {$item.html}            
+                {$item.add_html}
+                </div>            
+            {/if}
+            {if $item.error} <br /><span class="c5t_error_message">{$item.error}<span> {/if}
+          </td>
+        </tr>
+        {/foreach}
+        </table>
+        </form>
+        
+        
+        {call_module trigger="module_demo" module=$module_name}
+        
+</fieldset>
+
+{else}
+
+<p>
+  <img src="../template/admin/image/icon/apply.png" width="22" height="22" border="0" alt="{$txt_install_module}" title="{$txt_install_module}" /> = {$txt_installed_modules}<br />
+  <img src="../template/admin/image/icon/cancel.png" width="22" height="22" border="0" alt="{$txt_uninstall_module}" title="{$txt_uninstall_module}" /> = {$txt_not_installed_modules}
+</p>
+
+
+<div class="c5t_error_message" style="margin-top:20px;">
+  {foreach from=$message item=item}
+    <div class="c5t_error_message_item">{$item}</div>
+  {/foreach}              
+</div>  
+
+
+{if $delete_confirmation.dialogue == 1}
+<div class="c5t_confirmation">
+    <div class="c5t_confirmation_text">
+      {$txt_sure_uninstall_module}
+    </div>
+    <div class="c5t_confirmation_buttons">
+      <a href="./module.php?u={$delete_confirmation.module}&amp;c=y">{$txt_yes_sure}</a>
+      <a href="./module.php">{$txt_cancel}</a>
+    </div>
+</div>
+{/if}
+
+<table class="c5t_configuration_list">
+{foreach from=$available_modules item=item}
+<tr>
+  <td class="c5t_configuration_list_label">{$item.name}</td>
+  <td>
+    {if $item.installed == false}
+    <img src="../template/admin/image/icon/cancel.png" width="22" height="22" border="0" alt=""/>
+    {else}
+    <img src="../template/admin/image/icon/apply.png" width="22" height="22" border="0" alt="" />  
+    {/if}
+  </td> 
+  <td>{$item.description}</td>
+  <td style="padding-right:50px;">
+
+    {if $item.installed == true}
+      <a href="./module.php?u={$item.module}">{$txt_uninstall_module}</a>
+    {else}
+      <a href="./module.php?i={$item.module}">{$txt_install_module}</a>
+    {/if}  
+    
+  </td>
+  {if $item.installed == true}
+    <td><a href="./module.php?o={$item.module}&amp;d=up" title="{$txt_move_up}"><img src="../template/admin/image/icon/1uparrow.png" width="22" height="22" border="0" alt="{$txt_move_up}" title="{$txt_move_up}" /></a></td>
+    <td><a href="./module.php?o={$item.module}&amp;d=down" title="{$txt_move_down}"><img src="../template/admin/image/icon/1downarrow.png" width="22" height="22" border="0" alt="{$txt_move_down}" title="{$txt_move_down}" /></a></td>
+  {else}
+    <td></td>
+    <td></td>
+  {/if}  
+</tr>
+{/foreach}    
+</table>
+
+{/if}
+

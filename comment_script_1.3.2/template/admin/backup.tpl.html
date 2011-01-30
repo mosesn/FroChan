@@ -1,0 +1,60 @@
+<img src="../template/admin/image/icon/backup_large.png" width="32" height="32" align="left" style="margin-right:20px;" />
+<h3>{$txt_backup}</h3>
+
+<div class="c5t_link_button">
+    <a href="./backup.php?do=ex">Export Backup</a>
+</div>
+
+
+
+
+<div class="c5t_error_message">
+  {foreach from=$message item=item}
+    <div class="c5t_error_message_item">{$item}</div>
+  {/foreach}              
+</div>
+
+{if $delete_confirmation.dialogue == 1}
+<div class="c5t_confirmation">
+    <div class="c5t_confirmation_text">
+      {$txt_sure_delete_file}
+    </div>
+    <div class="c5t_confirmation_buttons">
+      <a href="./backup.php?do=dec&amp;f={$delete_confirmation.file}">{$txt_yes_sure}</a>
+      <a href="./backup.php">{$txt_cancel}</a>
+    </div>
+</div>
+{/if}
+
+{if $import_confirmation.dialogue == 1}
+<div class="c5t_confirmation">
+    <div class="c5t_confirmation_text">
+      {$txt_sure_import_backup}
+    </div>
+    <div class="c5t_confirmation_buttons">
+      <a href="./backup.php?do=imc&amp;f={$import_confirmation.file}">{$txt_yes_sure}</a>
+      <a href="./backup.php">{$txt_cancel}</a>
+    </div>
+</div>
+{/if}
+
+
+<table class="c5t_file_list">
+<tr>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th>{$txt_date}</th>
+  <th>{$txt_time}</th>
+</tr>
+{foreach from=$backup_files item=item}
+<tr>
+  <td><a href="./backup.php?do=im&amp;f={$item.file}">{$txt_import_backup}</a></td>
+  <td><a href="./backup.php?do=dl&amp;f={$item.file}">{$txt_download_backup}</a></td>
+  <td><a href="./backup.php?do=de&amp;f={$item.file}">{$txt_delete_backup}</a></td>
+  <td>{$item.date}</td>
+  <td>{$item.time}</td>
+</tr>
+{/foreach}    
+</table>
+

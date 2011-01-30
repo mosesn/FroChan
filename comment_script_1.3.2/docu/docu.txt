@@ -1,0 +1,4 @@
+Documentation
+
+English: http://www.gentlesource.com/documentation/comments/ 
+German:  http://www.gentlesource.de/dokumentation/kommentar/

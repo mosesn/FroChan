@@ -1,0 +1,27 @@
+<div class="c5t_navigation_background">
+<div class="c5t_navigation">
+
+<!-- <p><strong>{$txt_navigation}</strong></p> -->
+<ul>
+  <li><a href="./"><img src="../template/admin/image/icon/homepage.png" width="22" height="22" align="absmiddle" />{$txt_homepage}</a></li>
+  <li><a href="./commentlistall.php"><img src="../template/admin/image/icon/latestcomments.png" width="22" height="22" align="absmiddle" />{$txt_latest_comments}</a></li>
+  <li><a href="./pagelist.php"><img src="../template/admin/image/icon/pagelist.png" width="22" height="22" align="absmiddle" />{$txt_identifier_list}</a></li>
+  <li><a href="./account.php"><img src="../template/admin/image/icon/adminaccount.png" width="22" height="22" align="absmiddle" />{$txt_admin_account}</a></li>
+  <li><a href="./configuration.php"><img src="../template/admin/image/icon/configuration.png" width="22" height="22" align="absmiddle" />{$txt_configuration}</a></li>
+  
+  {if $display_setting_navigation}
+  <li class="c5t_sub_navigation"><a href="./setting.php">{$txt_general_settings}</a></li>
+  <li class="c5t_sub_navigation"><a href="./module.php">{$txt_module_installation}</a></li>
+  {foreach from=$module_list item=item}
+  <li class="c5t_sub_navigation"><a href="./module.php?m={$item.module}">{$item.name}</a></li>
+  {/foreach}
+  {/if}
+  
+  <li><a href="./include.php"><img src="../template/admin/image/icon/include.png" width="22" height="22" align="absmiddle" />{$txt_include}</a></li>
+  <li><a href="./backup.php"><img src="../template/admin/image/icon/backup.png" width="22" height="22" align="absmiddle" />{$txt_backup}</a></li>
+  <li><a href="{$txt_documentation_link}" target="_blank"><img src="../template/admin/image/icon/documentation.png" width="22" height="22" align="absmiddle" />{$txt_documentation}</a></li>
+  <li><a href="./?l=o"><img src="../template/admin/image/icon/logout.png" width="22" height="22" align="absmiddle" />{$txt_log_out}</a></li>
+</ul>
+
+</div>
+</div>
