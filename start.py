@@ -1,41 +1,81 @@
 import cherrypy
 import pymongo
 from pymongo import Connection
+import cgi #For html escaping
 
-class HelloWorld:
+MAX = 10
+
+def divify(some_list):
+    return ["<div>%s</div>" % s for s['comment'] in some_list]
+
+class Form:
+    def __init__(self):
+        self.inputs = list()
+        self.action = ""
+        self.method = ""
+        self.submit = None
+
+    def add_input(self, name, tpe):
+        self.inputs.append((name, tpe))
+
+    def add_submit(self, name="", value):
+        self.submit = (name, value)
+
+    def set_action(self, action):
+        self.action = action
+
+    def set_method(self, method):
+        self.method = method
+
+    def __str__(self):
+        inputs = ["""<input type="%s" name="%s" />""" % (name, tpe) for (name, tpe) in self.inputs]
+        if self.submit:
+            inputs.append("""<input name="%s" type="submit" value="%s" />""" % self.submit)
+                          
+        form = """<form action="%s" method="%s">%s</form>""" % (self.action, self.method, "".join(inputs))
+        return form
+                          
+class MessageBoard:
     
     def __init__(self):
         self.pageviews = 0
-        self.comments = list()
         connection = Connection('localhost',27017)
         self.db = connection.post_database
         
-    def index(self):
-        form = \
-             """
-            <form action="/post" method="post">
-                <input type="text" name="comment" />
-                <input type="submit" value="Submit" />
-            </form>
-            """
-
-        outputs = ""
+    def index(self, comment=""):
+        errors = list()
+        
         posts=self.db.posts
-        for post in posts.find():
-            outputs += "%s<br/>" % post["comment"]
-            
-        return form + "%s" % str(outputs)
 
-    def post(self, comment = ""):
-        if not comment:
-            return "Wow don't post empty comments!"
-        else:
-            posts=self.db.posts
-            posts.insert({"comment" : comment})
-            return """Comment posted successfully! <a href="\">"""
+        #Validate user input:
+        if cherrypy.request.method == "POST":
+            if not comment:
+                errors.append("Your comment is empty.")
+            else:
+                #Prepend
+                posts.reverse()
+                posts.insert({'comment' : cgi.escape(comment)})
+                posts.reverse()
+                #Truncate
+                posts = posts[:MAX]
+
+            
+        #form = \
+        #     """
+        #    <form action="" method="post">
+        #        <input type="text" name="comment" />
+        #        <input type="submit" value="Submit" />
+        #    </form>
+        #    """
+        form = Form()
+        form.set_action
+        errs = "<br />".join(errors)
+        output = "<br />".join(divify(posts.find()))
+        return "<br />".join([errs, form, output])
+
         
 
     index.exposed = True
-    post.exposed = True
-    
-cherrypy.quickstart(HelloWorld())
+
+        
+cherrypy.quickstart(MessageBoard())
