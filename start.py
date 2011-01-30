@@ -6,7 +6,7 @@ import cgi #For html escaping
 MAX = 10
 
 def divify(some_list):
-    return ["<div>%s</div>" % s for s['comment'] in some_list]
+    return ["<div>%s</div>" % s['post_content'] for s in list(some_list)[:(-MAX-1):-1]]
 
 class Form:
     def __init__(self):
@@ -47,15 +47,17 @@ class MessageBoard:
         
         posts=self.db.posts
 
+        posts_list= posts.find()
         #Validate user input:
         if cherrypy.request.method == "POST":
             if not comment:
                 errors.append("Your comment is empty.")
             else:
                 #Prepend
-                posts.insert({'comment' : cgi.escape(comment)})
+                posts.insert({'post_content' : cgi.escape(comment),
+                              'comments':[]})
                 #Truncate
-                posts = posts[:MAX]
+                posts_list = posts.find()
 
             
         form = Form()
@@ -64,7 +66,7 @@ class MessageBoard:
         form.add_submit()
         
         errs = "<br />".join(errors)
-        output = "<br />".join(divify(posts.find()))
+        output = "<br />".join(divify(posts_list))
         return "<br />".join([errs, str(form), output])
 
     index.exposed = True
