@@ -18,7 +18,7 @@ class Form:
     def add_input(self, name, tpe):
         self.inputs.append((name, tpe))
 
-    def add_submit(self, name="", value):
+    def add_submit(self, name="", value="Submit"):
         self.submit = (name, value)
 
     def set_action(self, action):
@@ -28,7 +28,7 @@ class Form:
         self.method = method
 
     def __str__(self):
-        inputs = ["""<input type="%s" name="%s" />""" % (name, tpe) for (name, tpe) in self.inputs]
+        inputs = ["""<input name="%s" type="%s" />""" % (name, tpe) for (name, tpe) in self.inputs]
         if self.submit:
             inputs.append("""<input name="%s" type="submit" value="%s" />""" % self.submit)
                           
@@ -53,27 +53,19 @@ class MessageBoard:
                 errors.append("Your comment is empty.")
             else:
                 #Prepend
-                posts.reverse()
                 posts.insert({'comment' : cgi.escape(comment)})
-                posts.reverse()
                 #Truncate
                 posts = posts[:MAX]
 
             
-        #form = \
-        #     """
-        #    <form action="" method="post">
-        #        <input type="text" name="comment" />
-        #        <input type="submit" value="Submit" />
-        #    </form>
-        #    """
         form = Form()
-        form.set_action
+        form.set_method("post")
+        form.add_input("comment", "text")
+        form.add_submit()
+        
         errs = "<br />".join(errors)
         output = "<br />".join(divify(posts.find()))
-        return "<br />".join([errs, form, output])
-
-        
+        return "<br />".join([errs, str(form), output])
 
     index.exposed = True
 
