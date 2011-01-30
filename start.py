@@ -13,16 +13,16 @@ class Form:
         self.method = ""
         self.submit = None
 
-    def add_input(name, tpe):
-        self.append((name, tpe))
+    def add_input(self, name, tpe):
+        self.inputs.append((name, tpe))
 
-    def add_submit(name, value):
+    def add_submit(self, name="", value):
         self.submit = (name, value)
 
-    def set_action(action):
+    def set_action(self, action):
         self.action = action
 
-    def set_method(method):
+    def set_method(self, method):
         self.method = method
 
     def __str__(self):
@@ -31,6 +31,7 @@ class Form:
             inputs.append("""<input name="%s" type="submit" value="%s" />""" % self.submit)
                           
         form = """<form action="%s" method="%s">%s</form>""" % (self.action, self.method, "".join(inputs))
+        return form
                           
 class MessageBoard:
     
@@ -52,15 +53,17 @@ class MessageBoard:
                 self.comments.reverse()
                 #Truncate
                 self.comments = self.comments[:MAX]
-            
-        form = \
-             """
-            <form action="" method="post">
-                <input type="text" name="comment" />
-                <input type="submit" value="Submit" />
-            </form>
-            """
 
+            
+        #form = \
+        #     """
+        #    <form action="" method="post">
+        #        <input type="text" name="comment" />
+        #        <input type="submit" value="Submit" />
+        #    </form>
+        #    """
+        form = Form()
+        form.set_action
         errs = "<br />".join(errors)
         output = "<br />".join(divify(self.comments))
         return "<br />".join([errs, form, output])
