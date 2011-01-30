@@ -9,17 +9,40 @@ body {
 #leftcol {
   background: #f00;
   float: left;
-  width: 19%;
-  height: 500px;
+  padding:5px;
+  padding-right:10px;
+  padding-bottom:40px;
+  background: #000;
+  zoom: 1; /* The toolbar element must have layout on IE. */
+
 }
 #content {
-  background-color:#0000;
-  float: right;
+  padding:10px;
+  float: left;
   width: 80%;
   height: 500px;
 }
+
 #footer {
   background: #0f0;
   clear: both;
   width: 100%;
+}
+
+.btn
+{
+padding-top:40px;
+}
+
+.btnTxt
+{
+font:bold 20px "Helvetica Neue",Arial,Sans-serif;
+font-size:20px;
+color:#fff;
+text-decoration:none;
+}
+
+.btnTxt:hover
+{
+color:#ccc;
 }
