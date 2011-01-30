@@ -68,6 +68,28 @@ class MessageBoard:
         return "<br />".join([errs, str(form), output])
 
     index.exposed = True
+        
+class Post:
+    #{"post_content": string, "comments": list}
+    def __init__(self, dic=None):
+        if dic:
+            self.load(dic)
+        else:
+            self.post_content = ""
+            self.comments = list()
+
+    #Make the contents of this Post match the dictionary
+    def load(self, dic):
+        self.post_content = dic["post_content"]
+        self.comments = dic["comments"]
+
+    #Add a comment
+    def add_comment(self, comment):
+        self.comments.append(comment)
+
+    #Get a dictionary representation of this Post
+    def get_dict(self):
+        return {"post_content": self.post_content, "comments": self.comments}
 
         
 cherrypy.quickstart(MessageBoard())
