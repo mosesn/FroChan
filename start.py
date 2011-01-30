@@ -1,10 +1,12 @@
 import cherrypy
+import pymongo
+from pymongo import Connection
 import cgi #For html escaping
 
 MAX = 10
 
 def divify(some_list):
-    return ["<div>%s</div>" % s for s in some_list]
+    return ["<div>%s</div>" % s['post_content'] for s in some_list]
 
 class Form:
     def __init__(self):
@@ -16,7 +18,7 @@ class Form:
     def add_input(self, name, tpe):
         self.inputs.append((name, tpe))
 
-    def add_submit(self, name="", value):
+    def add_submit(self, name="", value="Submit"):
         self.submit = (name, value)
 
     def set_action(self, action):
@@ -26,7 +28,7 @@ class Form:
         self.method = method
 
     def __str__(self):
-        inputs = ["""<input type="%s" name="%s" />""" % (name, tpe) for (name, tpe) in self.inputs]
+        inputs = ["""<input name="%s" type="%s" />""" % (name, tpe) for (name, tpe) in self.inputs]
         if self.submit:
             inputs.append("""<input name="%s" type="submit" value="%s" />""" % self.submit)
                           
@@ -37,37 +39,35 @@ class MessageBoard:
     
     def __init__(self):
         self.pageviews = 0
-        self.comments = list()
+        connection = Connection('localhost',27017)
+        self.db = connection.post_database
         
     def index(self, comment=""):
         errors = list()
         
+        posts=self.db.posts
+
+        posts_list=[]
         #Validate user input:
         if cherrypy.request.method == "POST":
             if not comment:
                 errors.append("Your comment is empty.")
             else:
                 #Prepend
-                self.comments.reverse()
-                self.comments.append(cgi.escape(comment))
-                self.comments.reverse()
+                posts.insert({'post_content' : cgi.escape(comment),
+                              'comments':[]})
                 #Truncate
-                self.comments = self.comments[:MAX]
+                posts_list = posts.find()[:MAX]
 
             
-        #form = \
-        #     """
-        #    <form action="" method="post">
-        #        <input type="text" name="comment" />
-        #        <input type="submit" value="Submit" />
-        #    </form>
-        #    """
         form = Form()
-        form.set_action
-        errs = "<br />".join(errors)
-        output = "<br />".join(divify(self.comments))
-        return "<br />".join([errs, form, output])
+        form.set_method("post")
+        form.add_input("comment", "text")
+        form.add_submit()
         
+        errs = "<br />".join(errors)
+        output = "<br />".join(divify(posts_list))
+        return "<br />".join([errs, str(form), output])
 
     index.exposed = True
 
