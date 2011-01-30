@@ -54,8 +54,9 @@ class MessageBoard:
                 errors.append("Your comment is empty.")
             else:
                 #Prepend
-                posts.insert({'post_content' : cgi.escape(comment),
+                post=Post({'post_content' : cgi.escape(comment),
                               'comments':[]})
+                posts.insert(post.get_dict())
                 #Truncate
                 posts_list = posts.find()
 
