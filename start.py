@@ -11,39 +11,6 @@ print(base)
 
 MAX = 10
 
-TEMPLATE = """
-<html>
-<head>
-<style type=text/css>
-    body {
-        font-family:Georgia,Serif;
-    }
-  
-    .post {
-      background: #F5F5F5;
-      border: 1px solid black;
-      padding: 10px;
-      margin:0px auto;
-      width: 50%%;
-    }
-
-    .response{
-    width: 70%%;
-    background:#444444;
-    color:#FFFFFF;
-    padding: 4px 20px;
-    margin: 5px 5px 5px 5px;
-    }
-    
-</style>
-</head>
-<body>
-<img src="/static/sweetie.png" />
-%s
-</body>
-</html>
-"""
-
 class Form:
     def __init__(self):
         self.inputs = list()
@@ -72,10 +39,6 @@ class Form:
         return form
                           
 class MessageBoard:
-    _cp_config = {'tools.staticdir.on' : True,
-                  'tools.staticdir.dir' : '/path/to/your/static/file/directory',
-                  'tools.staticdir.index' : 'index.html',
-    }    
     def __init__(self):
         self.pageviews = 0
         connection = Connection('localhost',27017)
@@ -83,9 +46,7 @@ class MessageBoard:
     
     def index(self, comment=""):
         errors = list()
-        
         posts=self.db.posts
-
         posts_list= posts.find()
         #Validate user input:
         if cherrypy.request.method == "POST":

@@ -1,6 +1,7 @@
 import cherrypy
 import os
 import sys
+from board import Board
 base = os.path.dirname(sys.argv[0])
 
 #Server configuration
@@ -29,9 +30,5 @@ board_conf = \
          }
     }
 
-class Board:
-    def index(self):
-        return "This is the placeholder for the board."
-    index.exposed = True
-    
+
 cherrypy.quickstart(Board(), '/', board_conf)

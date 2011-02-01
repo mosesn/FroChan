@@ -4,12 +4,15 @@
 Welcome
 </title>
 
-<link rel=stylesheet href="$css" type="text/css" />
+<link rel=stylesheet href="" type="text/css" />
 <script type="text/javascript" src=""></script>
 
 </head>
 <body>
-
+<form action="" method="post">
+<input type="text" name="message" />
+<input type="submit" value="submit" />
+</form>
 #for $post in $posts:
 	<div id="$post.post_id" class="post">
 		$post.content
