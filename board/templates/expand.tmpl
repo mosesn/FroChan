@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>
+Expand
+</title>
+
+<link rel=stylesheet href="" type="text/css" />
+<script type="text/javascript" src=""></script>
+
+</head>
+<body>
+
+	<div id="$post.post_id" class="post">
+		$post.content
+		#for $i in $range($len($post.replies)):
+		<div id="$post_$i" class="replies">
+			$replies[$i]
+		</div>
+		#end for		
+	</div>
+
+</body>
+</html>
