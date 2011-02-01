@@ -1,0 +1,44 @@
+
+  <div id="c5t_body">
+  <div id="c5t_bodycontent">
+  
+    <!-- Language selection (link list or dropdown menu) -->
+    {include file='default/language.tpl.html'}
+  
+    
+
+    {foreach from=$system_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+
+    {foreach from=$error_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+    
+    {call_module trigger="frontend_page_header"}
+  
+  
+    {include file=$detail_template}    
+    
+    
+    {call_module trigger="frontend_page_footer"}
+    
+    
+    
+    
+    {foreach from=$debug_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+    
+  </div>
+  </div>
+    

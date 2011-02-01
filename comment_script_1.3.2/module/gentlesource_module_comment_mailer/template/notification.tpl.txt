@@ -1,0 +1,21 @@
+{$txt_notification_mail_text}:
+
+{$page_url}
+
+{$txt_name}:       {$name}
+{$txt_email}:     {$email}
+{$txt_homepage}:   {$homepage}
+{$txt_title}:      {$title}
+
+{$txt_comment}:
+
+{$comment}
+
+
+{$txt_date}:      {$comment_date}
+{$txt_time}:       {$comment_time}
+{$txt_author_ip_address}:         {$comment_author_ip}
+{$txt_author_hostname}:       {$comment_author_host}
+{$txt_author_user_agent}:         {$comment_author_user_agent}
+
+{$link}

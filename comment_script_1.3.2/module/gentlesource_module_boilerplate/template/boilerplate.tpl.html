@@ -1,0 +1,49 @@
+{literal}
+<script type="text/javascript">
+// Copyright (c) 2002-2005 Alex King
+// http://www.alexking.org/
+// http://alexking.org/projects/js-quicktags/demo/index.html
+//
+// Licensed under the LGPL license
+// http://www.gnu.org/copyleft/lesser.html
+//
+// **********************************************************************
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+// **********************************************************************
+//
+function InsertContent(myField, myValue) {
+    //IE support
+    if (document.selection) {
+        myField.focus();
+        sel = document.selection.createRange();
+        sel.text = myValue;
+        myField.focus();
+    }
+    //MOZILLA/NETSCAPE support
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        var scrollTop = myField.scrollTop;
+        myField.value = myField.value.substring(0, startPos)
+                      + myValue 
+                      + myField.value.substring(endPos, myField.value.length);
+        myField.focus();
+        myField.selectionStart = startPos + myValue.length;
+        myField.selectionEnd = startPos + myValue.length;
+        myField.scrollTop = scrollTop;
+        myField.focus();
+    } else {
+        myField.value += myValue;
+        myField.focus();
+    }
+}
+</script>
+{/literal}
+
+<select name="boilerplate" size="1"  onchange="InsertContent({$field}, document.{$form}.boilerplate.value); document.{$form}.boilerplate.options[0].selected = true;">
+{foreach from=$boilerplate item=item}
+<option value="{$item.content}">{$item.title}</option>
+{/foreach}
+</select>

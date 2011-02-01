@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!doctype html public "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{$txt_content_direction}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset={$txt_charset}" />
+    <title>{$txt_comment_script} {$txt_admin_area}</title>
+    <link rel="stylesheet" href="../template/default/style.css" type="text/css">
+    <link rel="stylesheet" href="../template/admin/style.css" type="text/css">
+    
+    {literal}
+    <script type="text/javascript">
+        <!--
+    {/literal}
+    
+            var c5t_sure_delete_comment = '{$txt_sure_delete_comment}';
+            
+            
+    {literal}
+        
+        
+        function display(blockid) {
+            if (document.getElementById(blockid).style.display=='block'){
+                document.getElementById(blockid).style.display='none';
+            } else {
+                document.getElementById(blockid).style.display='block';
+            }
+        }  
+    
+        function delete_comment(c5t_url) {
+            var answer = confirm(c5t_sure_delete_comment)
+            if (answer){
+                window.location = c5t_url;
+                return false;
+            }
+            return answer;
+        }
+        
+        function check_all(name, ctl) {
+            for (i = 0; i < name.length; i++)
+            {
+                if (name[i].type == 'checkbox') {
+                    name[i].checked = ctl.checked? true:false
+                }
+            }
+        }
+        
+        //-->
+    </script>
+    
+    
+
+    <script type="text/javascript" src="../template/javascript/fckeditor/fckeditor.js"></script>
+
+    
+    {/literal}
+    
+    
+
+
+    
+    <script language="javascript" src="../template/javascript/ColorPicker2.js"></script>
+    
+    {call_module trigger="backend_source_head"}
+    
+  </head>
+  <body>
+    
+    {foreach from=$system_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+
+    {foreach from=$error_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+  
+    
+    {if $login_status}
+      {include file='admin/navigation.tpl.html'}
+    {/if}
+    
+  <div class="c5t_admin_content_background">
+  <div class="c5t_admin_content">
+  
+	<!-- Language selection (link list or dropdown menu) -->
+	{include file='admin/language.tpl.html'}
+    
+    {include file=$detail_template}
+    
+    
+  </div>
+  </div>
+  
+  
+    
+    {foreach from=$debug_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+  
+  </body>  
+</html>

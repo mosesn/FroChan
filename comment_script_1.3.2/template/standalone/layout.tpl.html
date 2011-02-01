@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{$txt_content_direction}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset={$txt_charset}" />
+    <title>{$txt_comment_script}</title>
+    <link rel="stylesheet" href="{$script_url}template/default/style.css" type="text/css" />    
+  </head>
+  <body>
+  
+  <div id="c5t_body">
+  <div id="c5t_bodycontent">
+  
+  
+    <!-- Language selection (link list or dropdown menu) -->
+    {include file='default/language.tpl.html'}
+    
+
+    {foreach from=$system_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+
+    {foreach from=$error_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+    
+    {call_module trigger="frontend_page_header"}
+  
+  
+    {include file=$detail_template}    
+    
+    
+    {call_module trigger="frontend_page_footer"}
+    
+    
+    
+    
+    {foreach from=$debug_messages item=item}
+    <div class="c5t_system">
+      <div class="c5t_index">{$item.title}</div>
+      <div class="c5t_code"><br />{$item.message}</div>
+    </div>
+    {/foreach}
+    
+  </div>
+  </div>
+    
+  </body>  
+</html>

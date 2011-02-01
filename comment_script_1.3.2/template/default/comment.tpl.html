@@ -1,0 +1,154 @@
+    
+    {call_module trigger="frontend_content_footer" data="$page_data"}
+
+    <!-- Comment List Start -->
+    <a name="c5t_comment"></a>
+    <h2 class="c5t_headline">{$txt_comment_headline} ({$result_number})</h2>
+    
+    <div class="c5t_comment_list">        
+        {foreach from=$comment_list item=item}
+            <div class="c5t_comment_item_background">
+            <div class="c5t_comment_item">
+                <div class="c5t_comment_item_title">{$item.comment_title}</div>
+                <div class="c5t_comment_item_text">{$item.frontend_text}</div>
+                <div class="c5t_comment_item_details">#{$item.comment_number} - {if $item.comment_author_homepage != '' and $item.comment_author_homepage != 'http://'}<a href="{$item.comment_author_homepage}">{$item.comment_author_name}</a>{else}{$item.comment_author_name}{/if} - {$item.comment_date} - {$item.comment_time}</div>
+            </div>
+            </div>
+        {/foreach}
+    </div>
+    <!-- Comment List End -->
+    
+    
+    
+    
+    
+    
+    <!-- Pagination Form Start -->
+    {if $comment_list and $display_pagination}
+        <div class="c5t_frontend_pagination">
+          {if $browse_previous == 2}
+            <form {$startpage.attributes}>{$startpage.hidden}{$startpage.start.html}</form>
+            <form {$previouspage.attributes}>{$previouspage.hidden}{$previouspage.previous.html}</form>
+          {else}
+            <span>{$txt_start}</span>
+            <span>{$txt_previous_page}</span>
+          {/if}
+          
+          {if $browse_next == 2}
+            <form {$nextpage.attributes}>{$nextpage.hidden}{$nextpage.next.html}</form>
+            <form {$endpage.attributes}>{$endpage.hidden}{$endpage.end.html}</form>
+          {else}
+            <span>{$txt_next_page}</span>
+            <span>{$txt_end}</span>
+          {/if}
+        </div>
+    {/if}
+    <!-- Pagination Form End -->
+    
+    
+    
+    
+    
+
+
+    <!-- Comment Form Start -->
+        <a name="c5t_form"></a>
+        
+        <div class="c5t_comment_form_background">
+        <form {$form.attributes}>
+        
+          <table class="c5t_comment_form_table">
+
+            <tr>
+              <td colspan="2" class="c5t_error_message">
+                {foreach from=$message item=item}
+                  <div class="c5t_error_message_item">{$item}</div>
+                {/foreach}              
+              </td>
+            </tr>
+
+            {if $show_form == "yes"}
+            <tr>
+              <td class="c5t_comment_form_label">
+                {if $form.name.error} <span class="c5t_error_message">{$form.name.error}</span> {else} {$form.name.label} {/if}  
+              </td>
+            </tr>
+            <tr>
+              <td class="c5t_comment_form_field">
+                {$form.name.html}
+              </td>
+            </tr>
+
+            <tr>
+              <td class="c5t_comment_form_label">
+                {if $form.email.error} <span class="c5t_error_message">{$form.email.error}</span> {else} {$form.email.label} {/if}
+              </td>
+            </tr>
+            <tr>
+              <td class="c5t_comment_form_field">
+                {$form.email.html}
+              </td>
+            </tr>
+
+            <tr>
+              <td class="c5t_comment_form_label">{$form.homepage.label}</td>
+            </tr>
+            <tr>
+              <td class="c5t_comment_form_field">
+                {$form.homepage.html}
+              </td>
+            </tr>
+
+            <tr>
+              <td class="c5t_comment_form_label">{$form.title.label}</td>
+            </tr>
+            <tr>
+              <td class="c5t_comment_form_field">
+                {$form.title.html}
+              </td>
+            </tr>
+
+            <tr>
+              <td class="c5t_comment_form_label">
+                {if $form.$comment_field_name.error} <span class="c5t_error_message">{$form.$comment_field_name.error}</span> {else} {$form.$comment_field_name.label} {/if}
+              </td>
+            </tr>
+            
+            <tr>
+              <td>
+                {call_module trigger="frontend_textarea" field=$comment_field_name}                
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="c5t_comment_form_field">
+                {$form.$comment_field_name.html}                
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="c5t_comment_form_field">
+                {call_module trigger="frontend_comment_form"}
+              </td>
+            </tr>
+
+
+            <tr>
+              <td class="c5t_comment_form_label"></td>
+            </tr>
+            <tr>
+              <td class="c5t_comment_form_submit">{$form.save.html}{$form.hidden}</td>
+            </tr>
+
+            {/if}
+          </table>
+            
+        </form>
+        </div>
+    <!-- Comment Form End -->
+    
+    
+    
+    
+    
+    
