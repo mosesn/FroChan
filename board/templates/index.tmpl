@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>
+Welcome
+</title>
+
+<link rel=stylesheet href="$css" type="text/css" />
+<script type="text/javascript" src=""></script>
+
+</head>
+<body>
+
+#for $post in $posts:
+	<div id="$post.post_id" class="post">
+		$post.content
+		<a href="/expand/$post.post_id">
+			Replies: $len($post.replies)
+		</a>
+	</div>
+#end for
+
+</body>
+</html>

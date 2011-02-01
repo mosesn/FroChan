@@ -1,15 +1,12 @@
 import cherrypy
+import os
+import sys
+base = os.path.dirname(sys.argv[0])
 
 #Server configuration
 site_conf = \
     {'server.socket_host': '127.0.0.1',
      'server.socket_port': 80,
-     #hitting the server at the url /static will ask the server to serve static content
-     '/static': {
-            'tools.staticdir.on': True,
-            #'static' is the local path to the static directory
-            'tools.staticdir.dir': 'static'
-         }
     }
 
 cherrypy.config.update(site_conf)
@@ -22,15 +19,19 @@ board_conf = \
         {'type': 'mongodb',
          'host': 'localhost',
          'port': 0000,
-        }
+        },
+    '/static':
+        {'tools.staticdir.on':True,
+        'tools.staticdir.dir':os.path.join(base, 'static'),
+         'tools.staticdir.content_types': {'png': 'image/png',
+                                           'css': 'text/css',
+                                           'js':'application/javascript',}
+         }
     }
-
 
 class Board:
     def index(self):
         return "This is the placeholder for the board."
     index.exposed = True
-
-cherrypy.tree.mount(Board(), '/', board_conf)
-
-cherrypy.engine.start()
+    
+cherrypy.quickstart(Board(), '/', board_conf)

@@ -4,8 +4,11 @@ class Board:
         #Connect and load posts
         self.posts = load()
         #load templates
-        self.expand_template = ""
-        self.index_template = ""
+        index_t = open('templates/index.tmpl', 'r')
+        expand_t = open('templates/expand.tmpl', 'r')
+        #string-ize
+        self.expand_template = expand_t.read()
+        self.index_template = index_t.read()
 
     def index(self):
         name_space = {'posts':self.post}
