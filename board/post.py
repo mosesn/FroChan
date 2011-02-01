@@ -6,14 +6,15 @@ import datetime
 
 class Post:
     #inits
-    def __init__(self,post_id="",message=""):
+    def __init__(self,board,post_id="",message=""):
         connection=Connection()
         #name of database
         db=connection.posts_database
         self.collection=db.posts
+        self.board=board
         if post_id == "":
             self.timestamp=datetime.datetime.utcnow()            
-            self.post_id=self.collection.insert({'message':message,'replies':[],'timestamp':self.timestamp})
+            self.post_id=self.collection.insert({'message':message,'board':self.board,'replies':[],'timestamp':self.timestamp})
         else:
             dic=self.collection.findOne({'_id':post_id})
             self.message=dic['message']
@@ -36,8 +37,8 @@ class Post:
     def get_timestamp():
         return self.timestamp
 
-def get_posts():
+def get_posts(board):
     connection=Connection()
     db=connection.posts_database
     posts=db.posts
-    return list(posts.find())
+    return list(posts.find({'board':board}))
