@@ -11,7 +11,7 @@ class Post:
         self.replies=dic['replies']
         self.collection=collection
         if dic['_id']==None:
-            self.id=self.collection.insert({'message':self.message,'replies':self.replies})
+            self.id=self.collection.insert({'message':self.message,'replies':self.replies,'timestamp':datetime.datetime.utcnow()})
         else:
             self.id=dic['_id']
 
@@ -24,7 +24,7 @@ class Post:
     #adds a reply atomicly
     def add_reply(self,new_reply):
         self.replies.append(new_reply)
-        self.collection.update({'_id'=self.id},self.replies,new_reply)
+        self.collection.update({'_id'=self.id},{"$set": "replies":self.replies,"timestamp":datetime.datetime.utcnow()})
 
 class MessageBoard:
     def index:
