@@ -41,4 +41,6 @@ def get_posts(board):
     connection=Connection()
     db=connection.posts_database
     posts=db.posts
-    return list(posts.find({'board':board}))
+    #print [post for post in posts.find({'board':board})]
+    print [str(p['_id']) for p in posts.find({'board':board})] 
+#    return [Post(board,post_id=post['_id']) for post in posts.find({'board':board})]
