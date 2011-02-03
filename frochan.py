@@ -14,14 +14,14 @@ class Post:
             self.timestamp=datetime.datetime.utcnow()            
             self.post_id=self.collection.insert({'message':message,'replies':[],'timestamp':self.timestamp})
         else:
-            dic=self.collection.findOne({'_id':post_id})
+            dic=self.collection.findOne({'_id':ObjectId(post_id)})
             self.message=dic['message']
             self.replies=dic['replies']
             self.post_id=dic['_id']
 
     #refreshes the state of the post
     def update(self):
-        coll_dict = self.collection.findOne({'_id':self.post_id})
+        coll_dict = self.collection.findOne({'_id':ObjectId(self.post_id)})
         self.replies = coll_dict['replies']
         self.message = coll_dict['message']
         self.timestamp = coll_dict['timestamp']
