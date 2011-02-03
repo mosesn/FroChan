@@ -34,7 +34,10 @@ class Board:
             if not message:
                 print('Message was empty')
                 pass #Add to errors or something...
-            post = Post(self.board_name, message=message)
+            else:
+                post = Post(self.board_name, post_id=post_id)
+                post.add_reply(message)
+        post.update()    
         #display the post and responses for post_id
         print "works correctly"
         post = Post(self.board_name, post_id=post_id)
