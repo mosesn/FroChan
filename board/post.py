@@ -3,6 +3,7 @@ import cherrypy
 from pymongo import Connection
 import cgi #For html escaping
 import datetime
+from pymongo.objectid import ObjectId
 
 class Post:
     #inits
@@ -16,14 +17,16 @@ class Post:
             self.timestamp=datetime.datetime.utcnow()            
             self.post_id=self.collection.insert({'message':message,'board':self.board,'replies':[],'timestamp':self.timestamp})
         else:
-            dic=self.collection.findOne({'_id':post_id})
+            #needs ObjectId to string->weird objectid type for mongo
+            dic = db.posts.find_one({'_id': ObjectId(post_id) })
             self.message=dic['message']
             self.replies=dic['replies']
             self.post_id=dic['_id']
+            
 
     #refreshes the state of the post
     def update(self):
-        coll_dict = self.collection.findOne({'_id':self.post_id})
+        coll_dict = self.collection.find_one({'_id': self.post_id})
         self.replies = coll_dict['replies']
         self.message = coll_dict['message']
         self.timestamp = coll_dict['timestamp']
@@ -43,4 +46,4 @@ def get_posts(board):
     posts=db.posts
     #print [post for post in posts.find({'board':board})]
     print [str(p['_id']) for p in posts.find({'board':board})] 
-#    return [Post(board,post_id=post['_id']) for post in posts.find({'board':board})]
+    return [Post(board,post_id=post['_id']) for post in posts.find({'board':board})]

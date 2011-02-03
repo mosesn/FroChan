@@ -15,7 +15,7 @@ Welcome
 </form>
 #for $post in $posts:
 	<div id="$post.post_id" class="post">
-		$post.content
+		$post.message
 		<a href="/expand/$post.post_id">
 			Replies: $len($post.replies)
 		</a>

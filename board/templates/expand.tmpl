@@ -11,7 +11,7 @@ Expand
 <body>
 
 	<div id="$post.post_id" class="post">
-		$post.content
+		$post.message
 		#for $i in $range($len($post.replies)):
 		<div id="$post_$i" class="replies">
 			$replies[$i]

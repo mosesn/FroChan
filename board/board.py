@@ -17,14 +17,13 @@ class Board:
         self.index_template = index_t.read()
 
     def index(self, message=None):
-        self.posts = p.get_posts(self.board_name)
         if cherrypy.request.method == 'POST':
             if not message:
                 pass #Add to errors or something...
             else:
                 print("Adding %s as a post" % message)
                 post = Post(self.board_name, message=message)
-        
+        self.posts = p.get_posts(self.board_name)
         name_space = {'posts':self.posts}
         return str(Template(self.index_template, name_space))
     index.exposed = True
@@ -33,11 +32,15 @@ class Board:
         self.posts = p.get_posts(self.board_name)
         if cherrypy.request.method == 'POST':
             if not message:
+                print('Message was empty')
                 pass #Add to errors or something...
             post = Post(self.board_name, message=message)
         #display the post and responses for post_id
+        print "works correctly"
         post = Post(self.board_name, post_id=post_id)
         #Render the page
+        print "works less correctly"
+           
         name_space = {'post':post}
         return str(Template(self.expand_template, name_space))
     expand.exposed = True
