@@ -34,7 +34,9 @@ class Post:
             dic = db.posts.find_one({'_id': ObjectId(post_id) })
             self.message=dic['message']
             self.replies=dic['replies']
-            self.post_id=dic['_id']            
+            self.post_id=dic['_id']
+        self.min_repls=self.get_mini_replies()
+
 
     #refreshes the state of the post
     def update(self):
@@ -42,6 +44,9 @@ class Post:
         self.replies = coll_dict['replies']
         self.message = coll_dict['message']
         self.timestamp = coll_dict['timestamp']
+
+    def get_mini_replies(self):
+        return self.replies[:3]
 
     #adds a reply atomicly
     def add_reply(self,new_reply):
@@ -66,5 +71,4 @@ def get_posts(board):
     posts=db.posts
     #print [post for post in posts.find({'board':board})]
     print [str(p['_id']) for p in posts.find({'board':board})] 
-    return [Post(board,post_id=post['_id']) for post in posts.find({'board':board})]
-    return []
+    return [Post(board,post_id=post['_id']) for post in posts.find({'board':board})][::-1]
