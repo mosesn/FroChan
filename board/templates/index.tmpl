@@ -71,6 +71,11 @@
 #for $post in $posts:
 	<div id="$post.post_id" class="post">
 		$post.message
+		<br />
+		#for $rep in $post.min_repls:
+		        $rep
+		       <br />
+		#end for
 		<a href="/expand/$post.post_id">
 			Replies: $len($post.replies)
 		</a>
