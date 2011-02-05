@@ -22,7 +22,7 @@ class Board:
                 pass #Add to errors or something...
             else:
                 print("Adding %s as a post" % message)
-                post = Post(self.board_name, message=message)
+                self.add_post(message)
         self.posts = p.get_posts(self.board_name)
         name_space = {'posts':self.posts}
         return str(Template(self.index_template, name_space))
@@ -44,3 +44,7 @@ class Board:
         name_space = {'post':post}
         return str(Template(self.expand_template, name_space))
     expand.exposed = True
+
+    def add_post(self,message):
+        post = Post(self.board_name, message=message)
+        
