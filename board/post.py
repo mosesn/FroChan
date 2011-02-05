@@ -10,9 +10,16 @@ num_saved=25
 class Post:
     #inits
     def __init__(self,board,post_id="",message=""):
-        connection=Connection()
+        userID = 'admin'
+        pwd = 'hackcu11'
+        host= 'flame.mongohq.com'
+        port = 27039
+        dbName = 'posts_database'
+        connection=Connection(host,port)
         #name of database
-        db=connection.posts_database
+        db = connection[dbName]
+        db.authenticate(userID, pwd)
+
         self.collection=db.posts
         self.board=board
         if post_id == "":
@@ -46,9 +53,18 @@ class Post:
         return self.timestamp
 
 def get_posts(board):
-    connection=Connection()
-    db=connection.posts_database
+    host= 'flame.mongohq.com'
+    port = 27039
+    dbName = 'posts_database'
+    connection=Connection(host,port)
+    userID = 'admin'
+    pwd = 'hackcu11'
+
+    #name of database
+    db = connection[dbName]
+    db.authenticate(userID, pwd)
     posts=db.posts
     #print [post for post in posts.find({'board':board})]
     print [str(p['_id']) for p in posts.find({'board':board})] 
     return [Post(board,post_id=post['_id']) for post in posts.find({'board':board})]
+    return []
