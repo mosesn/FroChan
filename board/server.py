@@ -2,7 +2,7 @@ import cherrypy
 import os
 import sys
 from board import Board
-base = os.path.dirname(sys.argv[0])
+base = os.path.dirname(os.path.abspath(__file__))
 
 #Server configuration
 site_conf = \
@@ -31,4 +31,4 @@ board_conf = \
     }
 
 
-cherrypy.quickstart(Board(), '/', board_conf)
+cherrypy.quickstart(Board(), '/', config=board_conf)
