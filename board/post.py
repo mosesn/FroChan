@@ -2,7 +2,7 @@ import pymongo
 import cherrypy
 from pymongo import Connection
 import cgi #For html escaping
-import datetime
+import time
 from pymongo.objectid import ObjectId
 
 num_saved=25
@@ -16,12 +16,12 @@ class Post:
         self.collection=db.posts
         self.board=board
         if post_id == "":
-            self.timestamp=datetime.datetime.utcnow()
+            self.timestamp=time.time()
             self.post_id=self.collection.insert({'message':message,'board':self.board,'replies':[],'timestamp':self.timestamp})
             tmp=self.collection.find().sort('timestamp')
             tmp=(list(tmp))
-            if(len(tmp)>num_saved+1):
-                self.collection.remove({'_id':tmp[1]['_id']})
+            if(len(tmp)>num_saved):
+                self.collection.remove({'_id':tmp[0]['_id']})
         else:
             #needs ObjectId to string->weird objectid type for mongo
             dic = db.posts.find_one({'_id': ObjectId(post_id) })
@@ -38,7 +38,7 @@ class Post:
 
     #adds a reply atomicly
     def add_reply(self,new_reply):
-        self.timestamp = datetime.datetime.utcnow()
+        self.timestamp = time.time()
         self.replies.append(new_reply)
         self.collection.update({'_id' : self.post_id},{"$set" : {"replies" :self.replies,"timestamp":self.timestamp}})
 
