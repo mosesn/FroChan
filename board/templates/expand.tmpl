@@ -1,23 +1,21 @@
-<html>
-<head>
+<html><head>
 <title>
 Expand
 </title>
-
 <link rel=stylesheet href="" type="text/css" />
 <script type="text/javascript" src=""></script>
-
 </head>
 <body>
-
-	<div id="$post.post_id" class="post">
+<form action="" method="post">
+<input type="text" name="message" />
+<input type="submit" value="submit" />
+</form>	
+<div id="$post.post_id" class="post">
 		$post.message
 		#for $i in $range($len($post.replies)):
 		<div id="#${post}_${i}" class="replies">
-			$replies[$i]
+			$post.replies[$i]
 		</div>
 		#end for		
 	</div>
-
-</body>
-</html>
+</body></html>
