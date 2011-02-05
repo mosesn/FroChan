@@ -13,7 +13,7 @@ Expand
 	<div id="$post.post_id" class="post">
 		$post.message
 		#for $i in $range($len($post.replies)):
-		<div id="$post_$i" class="replies">
+		<div id="#${post}_${i}" class="replies">
 			$replies[$i]
 		</div>
 		#end for		
