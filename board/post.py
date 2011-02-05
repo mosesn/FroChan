@@ -21,7 +21,7 @@ class Post:
             tmp=self.collection.find().sort('timestamp')
             tmp=(list(tmp))
             if(len(tmp)>num_saved+1):
-                self.collection.remove({'_id':tmp[1]['_id']})
+                self.collection.remove({'_id':tmp[0]['_id']})
         else:
             #needs ObjectId to string->weird objectid type for mongo
             dic = db.posts.find_one({'_id': ObjectId(post_id) })
