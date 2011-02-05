@@ -22,28 +22,29 @@ class Board:
                 pass #Add to errors or something...
             else:
                 print("Adding %s as a post" % message)
-                post = Post(self.board_name, message=message)
+                self.add_post(message)
         self.posts = p.get_posts(self.board_name)
         name_space = {'posts':self.posts}
         return str(Template(self.index_template, name_space))
     index.exposed = True
     
     def expand(self, post_id, message=None):
-        self.posts = p.get_posts(self.board_name)
+        post = Post(self.board_name, post_id=post_id)
         if cherrypy.request.method == 'POST':
             if not message:
                 print('Message was empty')
                 pass #Add to errors or something...
             else:
-                post = Post(self.board_name, post_id=post_id)
                 post.add_reply(message)
-        post.update()    
+        post.update()
         #display the post and responses for post_id
-        print "works correctly"
         post = Post(self.board_name, post_id=post_id)
         #Render the page
-        print "works less correctly"
            
         name_space = {'post':post}
         return str(Template(self.expand_template, name_space))
     expand.exposed = True
+
+    def add_post(self,message):
+        post = Post(self.board_name, message=message)
+        
