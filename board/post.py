@@ -5,6 +5,8 @@ import cgi #For html escaping
 import datetime
 from pymongo.objectid import ObjectId
 
+num_saved=25
+
 class Post:
     #inits
     def __init__(self,board,post_id="",message=""):
@@ -14,15 +16,18 @@ class Post:
         self.collection=db.posts
         self.board=board
         if post_id == "":
-            self.timestamp=datetime.datetime.utcnow()            
+            self.timestamp=datetime.datetime.utcnow()
             self.post_id=self.collection.insert({'message':message,'board':self.board,'replies':[],'timestamp':self.timestamp})
+            tmp=self.collection.find().sort('timestamp')
+            tmp=(list(tmp))
+            if(len(tmp)>num_saved+1):
+                self.collection.remove({'_id':tmp[1]['_id']})
         else:
             #needs ObjectId to string->weird objectid type for mongo
             dic = db.posts.find_one({'_id': ObjectId(post_id) })
             self.message=dic['message']
             self.replies=dic['replies']
-            self.post_id=dic['_id']
-            
+            self.post_id=dic['_id']            
 
     #refreshes the state of the post
     def update(self):
