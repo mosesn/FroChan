@@ -20,7 +20,11 @@ class Post:
             self.post_id=self.collection.insert({'message':message,'board':self.board,'replies':[],'timestamp':self.timestamp})
             tmp=self.collection.find().sort('timestamp')
             tmp=(list(tmp))
+<<<<<<< HEAD
+            if(len(tmp)>num_saved+1):
+=======
             if(len(tmp)>num_saved):
+>>>>>>> 9e6443539d6bd46b6fbf88da7ff90637e6f08f28
                 self.collection.remove({'_id':tmp[0]['_id']})
         else:
             #needs ObjectId to string->weird objectid type for mongo
