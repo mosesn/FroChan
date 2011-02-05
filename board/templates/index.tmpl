@@ -68,21 +68,26 @@
 <input type="submit" value="submit" />
 </form>
 
+<!-- Accordion -->
+<h2 class="demoHeaders">Accordion</h2>
+<div id="accordion">
+
 #for $post in $posts:
 	<div id="$post.post_id" class="post">
+		<h3>
 		$post.message
-		<a href="/expand/$post.post_id">
+		</h3>
+		<div><a href="/expand/$post.post_id">
 			Replies: $len($post.replies)
-		</a>
+		</a></div>
 	</div>
 #end for
+
+</div>
+
 </body>
+<!--
 	<body>
-	<p style="font-weight: bold; margin: 2em 0 1em; font-size: 1.3em;">YOUR COMPONENTS:</p>
-		
-		<!-- Accordion -->
-		<h2 class="demoHeaders">Accordion</h2>
-		<div id="accordion">
 			<div>
 				<h3><a href="#">First</a></h3>
 				<div>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</div>
@@ -95,8 +100,7 @@
 				<h3><a href="#">Third</a></h3>
 				<div>Nam dui erat, auctor a, dignissim quis.</div>
 			</div>
-		</div>
-	
+	-->
 		<!-- Tabs -->
 		<h2 class="demoHeaders">Tabs</h2>
 		<div id="tabs">

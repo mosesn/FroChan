@@ -1,9 +1,0 @@
-
-Documentation and installation instructions can be found on our website:
-
-http://www.gentlesource.com/documentation/comment-script/
-
-
-Dokumentation und Installationsanweisungen finden Sie auf unserer Website:
-
-http://www.gentlesource.de/dokumentation/kommentar/
