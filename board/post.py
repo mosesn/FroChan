@@ -52,7 +52,7 @@ class Post:
     #adds a reply atomicly
     def add_reply(self,new_reply):
         self.timestamp = time.time()
-        self.replies.append(cgi.escape(new_reply))
+        self.replies.append({'reply-text':cgi.escape(new_reply),'timestamp':self.timestamp})
         self.collection.update({'_id' : self.post_id},{"$set" : {"replies" :self.replies,"timestamp":self.timestamp}})
 
     def get_timestamp():

@@ -21,7 +21,8 @@ Expand
   <ol class="replies">
   #for $i in $range($len($post.replies)):
 	  <li id="#${post}_${i}">
-	  	$post.replies[$i]
+	  	$post.replies[$i]['timestamp']
+	  	$post.replies[$i]['reply-text']
     </li>
   #end for
   </ol>

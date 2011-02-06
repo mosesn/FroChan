@@ -34,7 +34,8 @@
 		    <ol>
 		    #for $rep in $post.min_repls:
           <li>  
-		        $rep
+		        $rep['message-text']
+			$rep['timestamp']
           </li>
 		    #end for
         </ol>
