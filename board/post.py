@@ -24,11 +24,12 @@ class Post:
         self.board=board
         if post_id == "":
             self.timestamp=time.time()
-            self.post_id=self.collection.insert({'message':message,'board':self.board,'replies':[],'timestamp':self.timestamp})
+            self.post_id=self.collection.insert({'message':cgi.escape(message),'board':self.board,'replies':[],'timestamp':self.timestamp})
             tmp=self.collection.find().sort('timestamp')
             tmp=(list(tmp))
             if(len(tmp)>num_saved):
                 self.collection.remove({'_id':tmp[0]['_id']})
+            self.replies=[]
         else:
             #needs ObjectId to string->weird objectid type for mongo
             dic = db.posts.find_one({'_id': ObjectId(post_id) })
@@ -51,7 +52,7 @@ class Post:
     #adds a reply atomicly
     def add_reply(self,new_reply):
         self.timestamp = time.time()
-        self.replies.append(new_reply)
+        self.replies.append(cgi.escape(new_reply))
         self.collection.update({'_id' : self.post_id},{"$set" : {"replies" :self.replies,"timestamp":self.timestamp}})
 
     def get_timestamp():

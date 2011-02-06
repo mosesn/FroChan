@@ -1,21 +1,40 @@
-<html><head>
+
+<html>
+<head>
 <title>
 Expand
 </title>
-<link rel=stylesheet href="" type="text/css" />
-<script type="text/javascript" src=""></script>
+
+<link type="text/css" href="/static/jquery-ui-1.8.9.custom.css" rel="stylesheet" />	
+<link type="text/css" href="/static/application.css" rel="stylesheet" />
+
+<script type="text/javascript" src="/static/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/static/jquery-ui-1.8.9.custom.min.js"></script>
+
 </head>
 <body>
-<form action="" method="post">
-<input type="text" name="message" />
-<input type="submit" value="submit" />
-</form>	
+
 <div id="$post.post_id" class="post">
+	<div class="op">
 		$post.message
-		#for $i in $range($len($post.replies)):
-		<div id="#${post}_${i}" class="replies">
-			$post.replies[$i]
-		</div>
-		#end for		
 	</div>
-</body></html>
+  <ol class="replies">
+  #for $i in $range($len($post.replies)):
+	  <li id="#${post}_${i}">
+	  	$post.replies[$i]
+    </li>
+  #end for
+  </ol>
+</div>
+
+<div id="content">
+<form action="" method="post">
+    <input type="text" name="message" id="" />
+    <input type="submit" value="submit" />
+</form>
+</div>
+</body>
+</html>
+
+
+
