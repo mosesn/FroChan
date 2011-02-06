@@ -6,8 +6,8 @@ from datetime import datetime
 
 #This class connects the backend with the frontend by accessing data and filling the templates
 class Board:
-    def __init__(self):
-        self.board_name = "FroSci"
+    def __init__(self,board_name="FroSci"):
+        self.board_name = board_name
         #Connect and load posts
         self.posts = p.get_posts(self.board_name)
         #load templates
@@ -28,6 +28,32 @@ class Board:
         name_space = {'posts':self.posts}
         return str(Template(self.index_template, name_space))
     index.exposed = True
+
+    def clas(self, board ,message=None):
+        if cherrypy.request.method == 'POST':
+            if not message:
+                print('No message received')
+                pass #Add to errors or something...
+            else:
+                #adds a post
+                self.add_post(message)
+
+        #Connect and load posts
+                self.posts = p.get_posts(self.board_name)
+        #load templates
+                index_t = open('templates/index.tmpl', 'r')
+                expand_t = open('templates/expand.tmpl', 'r')
+        #string-ize
+                self.expand_template = expand_t.read()
+                self.index_template = index_t.read()
+
+        self.board_name = board
+
+        self.posts = p.get_posts(self.board_name)
+
+        name_space = {'posts':self.posts}
+        return str(Template(self.index_template, name_space))
+    clas.exposed = True
     
     def expand(self, post_id, message=None):
         post = Post(self.board_name, post_id=post_id)

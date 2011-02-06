@@ -34,9 +34,9 @@
 		    <ol>
 		    #for $rep in $post.min_repls:
           <li>  
-	                $rep['reply-text']
+	                $rep["reply-text"]
 	         <span class="tab">     
-                 $rep['timestamp'].strftime("%a %b %d %H:%M:%S")
+                 $rep["timestamp"]strftime("%a %b %d %H:%M:%S")
            </span>
           </li>
 		    #end for

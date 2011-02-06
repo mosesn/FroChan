@@ -31,4 +31,4 @@ board_conf = \
     }
 
 
-cherrypy.quickstart(Board(), '/', config=board_conf)
+cherrypy.quickstart(Board("FroSci"), '/', config=board_conf)

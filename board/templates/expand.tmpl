@@ -20,9 +20,9 @@ Expand
   <ol class="replies">
   #for $i in $range($len($post.replies)):
 	  <li id="#${post}_${i}">
-      $post.replies[$i]['reply-text']
+      $post.replies[$i]["reply-text"]
   <span class="tab">
-      $post.replies[$i]['timestamp'].strftime("%a %b %d %H:%M:%S %Y")
+      $post.replies[$i]["timestamp"].strftime("%a %b %d %H:%M:%S %Y")
   </span>
     </li>
   #end for
