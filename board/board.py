@@ -2,6 +2,7 @@ import cherrypy
 from Cheetah.Template import Template
 from post import Post
 import post as p
+from datetime import datetime
 
 #This class connects the backend with the frontend by accessing data and filling the templates
 class Board:

@@ -17,3 +17,4 @@ body > div { max-width: 960px; margin: 20px auto; }
 input[type='text'] { margin-left: 15%; padding: 10px; font-size: 1.3em; border: 1px solid #C6C6C6; width: 70%; }
 input[type='submit'] { padding: 8px; font-size: 1.3em; border: none; }
 form { margin-bottom: 20px; margin-right: 5%;}
+.tab{float: right;}
